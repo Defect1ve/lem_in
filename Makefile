@@ -26,7 +26,7 @@ SRC = $(addprefix $(DIR), $(SRCS))
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME) $(VISUAL)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(addprefix $(DIR), lem_in.h)
 	make -C $(LIB_DIR)
@@ -38,13 +38,11 @@ $(NAME): $(OBJ) $(addprefix $(DIR), lem_in.h)
 
 clean:
 	rm -f $(OBJ)
-	rm -f $(VIS_OBJ)
 	make -C ./libft clean
 	tput setaf 4; echo All object files have been deleted
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(VISUAL)
 	make -C ./libft fclean
 	tput setaf 5; echo Binary file has been deleted
 
