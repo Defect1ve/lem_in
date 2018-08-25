@@ -101,7 +101,7 @@ int		main(void)
 	lem->start = -1;
 	lem->end = -1;
 	lem->position = '\0';
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line) && line)
 	{
 		get_line(lem, line);
 		ft_printf("%s\n", line);
