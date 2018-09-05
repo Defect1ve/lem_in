@@ -83,3 +83,32 @@ void	add_ways(t_lem_in *lem, t_room *end)
 			return ;
 	}
 }
+
+void	print_ways(t_lem_in *lem)
+{
+	t_ways	*ways;
+	t_queue	*way;
+
+	ways = lem->ways;
+	ft_printf("\e[1m\e[4mWAYS\e[0m:\n");
+	while (ways)
+	{
+		way = ways->way;
+		while (way->next)
+		{
+			ft_printf("%s->", way->room->name);
+			way = way->next;
+		}
+		ft_printf("%s\n", way->room->name);
+		ways = ways->next;
+	}
+	ft_printf("\n");
+}
+
+void	get_flags(t_lem_in *lem, int ac, char **av)
+{
+	if (!ft_strcmp(av[1], "-color") || (ac > 2 && !ft_strcmp(av[2], "-color")))
+		lem->color = 1;
+	if (!ft_strcmp(av[1], "-ways") || (ac > 2 && !ft_strcmp(av[2], "-ways")))
+		lem->way = 1;
+}

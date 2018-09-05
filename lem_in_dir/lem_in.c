@@ -58,14 +58,38 @@ void	get_link(t_lem_in *lem, char *line)
 	i = -1;
 	j = -1;
 	link_check(line, lem, &i, &j);
+	if (lem->link[i][j] == 1 || lem->link[j][i] == 1)
+		algorithm(lem);
 	lem->link[i][j] = 1;
 	lem->link[j][i] = 1;
+}
+
+void	line_rememb(t_lem_in *lem, char *line)
+{
+	t_input	*in;
+
+	if (!lem->input)
+	{
+		lem->input = (t_input *)malloc(sizeof(t_input));
+		in = lem->input;
+	}
+	else
+	{
+		in = lem->input;
+		while (in->next)
+			in = in->next;
+		in->next = (t_input *)malloc(sizeof(t_input));
+		in = in->next;
+	}
+	in->next = NULL;
+	in->str = ft_strdup(line);
 }
 
 void	get_line(t_lem_in *lem, char *line)
 {
 	int			i;
 
+	line_rememb(lem, line);
 	if (line[0] && line[0] == '#')
 		(line[1] && line[1] == '#') ? get_command(lem, line) : 0;
 	else if (lem->ants == -1)
@@ -86,9 +110,10 @@ void	get_line(t_lem_in *lem, char *line)
 		get_link(lem, line);
 	else
 		error("Invalid usage of start/end");
+	ft_strdel(&line);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_lem_in	*lem;
 	char		*line;
@@ -98,15 +123,16 @@ int		main(void)
 	lem->link = NULL;
 	lem->size = 0;
 	lem->ants = -1;
+	lem->input = NULL;
 	lem->start = -1;
 	lem->end = -1;
+	lem->color = 0;
+	lem->way = 0;
 	lem->position = '\0';
+	if (argc > 1)
+		get_flags(lem, argc, argv);
 	while (get_next_line(0, &line) && line)
-	{
 		get_line(lem, line);
-		ft_printf("%s\n", line);
-		ft_strdel(&line);
-	}
 	algorithm(lem);
 	return (0);
 }

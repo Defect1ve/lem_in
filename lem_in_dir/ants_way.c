@@ -66,6 +66,19 @@ void	ants_way_extra(t_ways *ways, int steps, int *ant, t_lem_in *lem)
 	(way->room->num == lem->end) ? exit(0) : 0;
 }
 
+void	print_input(t_lem_in *lem)
+{
+	t_input	*in;
+
+	in = lem->input;
+	while (in)
+	{
+		ft_printf("%s\n", in->str);
+		in = in->next;
+	}
+	ft_printf("\n");
+}
+
 void	ants_way(t_lem_in *lem)
 {
 	int		steps;
@@ -77,7 +90,8 @@ void	ants_way(t_lem_in *lem)
 	steps = 0;
 	c_ways = 0;
 	ant = 1;
-	ft_printf("\n");
+	print_input(lem);
+	(lem->way) ? print_ways(lem) : 0;
 	ways = lem->ways;
 	while (ways)
 	{
@@ -86,10 +100,9 @@ void	ants_way(t_lem_in *lem)
 	}
 	length = ways_len(lem);
 	steps = ((long)length + (long)lem->ants - 1) / (long)c_ways;
+	if (lem->color)
+		ft_printf("\e[38;5;%dm", lem->ants % 200 + 20);
 	while (steps)
-	{
-		ants_way_extra(ways, steps, &ant, lem);
-		steps--;
-	}
+		ants_way_extra(ways, steps--, &ant, lem);
 	exit(0);
 }
