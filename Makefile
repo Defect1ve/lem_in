@@ -12,7 +12,7 @@
 
 MAKEFLAGS += --silent
 
-NAME = lem_in
+NAME = lem-in
 
 FLAGS = -Wall -Wextra -Werror
 
