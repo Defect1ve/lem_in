@@ -95,12 +95,12 @@ void	get_line(t_lem_in *lem, char *line)
 	else if (lem->ants == -1)
 	{
 		i = -1;
-		(ft_strlen(line) == 0) ? error("Empty file") : 0;
+		(ft_strlen(line) == 0) ? error("Empty file", lem) : 0;
 		((lem->ants = ft_atoi(line)) < 1) ?
-		error("Invalid number of ants =(") : 0;
+		error("Invalid number of ants =(", lem) : 0;
 		while (line[++i])
 			(line[i] > '9' || line[i] < '0') ?
-			error("Invalid number of ants =(") : 0;
+			error("Invalid number of ants =(", lem) : 0;
 	}
 	else if (strchr(line, ' ') && !lem->link)
 		get_room(lem, line);
@@ -109,7 +109,7 @@ void	get_line(t_lem_in *lem, char *line)
 	else if (lem->position == '\0')
 		get_link(lem, line);
 	else
-		error("Invalid usage of start/end");
+		error("Invalid usage of start/end", lem);
 	ft_strdel(&line);
 }
 
@@ -126,11 +126,8 @@ int		main(int argc, char **argv)
 	lem->input = NULL;
 	lem->start = -1;
 	lem->end = -1;
-	lem->color = 0;
-	lem->way = 0;
 	lem->position = '\0';
-	if (argc > 1)
-		get_flags(lem, argc, argv);
+	get_flags(lem, argc, argv);
 	while (get_next_line(0, &line) && line)
 		get_line(lem, line);
 	algorithm(lem);

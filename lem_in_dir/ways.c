@@ -107,8 +107,24 @@ void	print_ways(t_lem_in *lem)
 
 void	get_flags(t_lem_in *lem, int ac, char **av)
 {
-	if (!ft_strcmp(av[1], "-color") || (ac > 2 && !ft_strcmp(av[2], "-color")))
-		lem->color = 1;
-	if (!ft_strcmp(av[1], "-ways") || (ac > 2 && !ft_strcmp(av[2], "-ways")))
-		lem->way = 1;
+	int i;
+
+	lem->way = 0;
+	lem->color = 0;
+	lem->err = 0;
+	i = 0;
+	while (++i < ac)
+	{
+		if (!ft_strcmp(av[i], "-color"))
+			lem->color = 1;
+		else if (!ft_strcmp(av[i], "-ways"))
+			lem->way = 1;
+		else if (!ft_strcmp(av[i], "-error"))
+			lem->err = 1;
+		else
+		{
+			lem->err = 1;
+			error("Usage: ./lem-in [-error] [-ways] [-color]", lem);
+		}
+	}
 }

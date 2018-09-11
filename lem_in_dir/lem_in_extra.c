@@ -17,7 +17,7 @@ void	get_command(t_lem_in *lem, char *line)
 	if (!ft_strcmp(line, "##start"))
 	{
 		if ((lem->start != -1 || lem->position != '\0') && !lem->link)
-			error("Too much starts");
+			error("Too much starts", lem);
 		else if (lem->start != -1 || lem->position != '\0')
 			algorithm(lem);
 		lem->position = 's';
@@ -25,16 +25,16 @@ void	get_command(t_lem_in *lem, char *line)
 	else if (!ft_strcmp(line, "##end"))
 	{
 		if ((lem->end != -1 || lem->position != '\0') && !lem->link)
-			error("Too much ends");
+			error("Too much ends", lem);
 		else if (lem->end != -1 || lem->position != '\0')
 			algorithm(lem);
 		lem->position = 'f';
 	}
 }
 
-void	error(char *str)
+void	error(char *str, t_lem_in *lem)
 {
-	ft_printf("%s\n", str);
+	(lem->err) ? ft_printf("%s\n", str) : ft_printf("ERROR\n");
 	exit(0);
 }
 
@@ -49,20 +49,20 @@ void	room_check(char *line, t_room *room, t_lem_in *lem)
 	while (*line)
 	{
 		(*line == ' ') ? spaces++ : 0;
-		((*line < 48 || *line > 57) && *line != ' ' && *line != '-') ?
-		error("Coord fail") : 0;
+		((*line < 48 || *line > 57) && *line != ' ' && (*line != '-' ||
+		*(line - 1) != ' ')) ? error("Coord fail", lem) : 0;
 		line++;
 	}
 	while (temp && temp != room)
 	{
 		if ((temp->x == room->x && temp->y == room->y)
 		|| !(ft_strcmp(temp->name, room->name)))
-			error("Invalid room");
+			error("Invalid room", lem);
 		temp = temp->next;
 	}
 	if (spaces != 2 || room->name[0] == 'L' ||
 	room->name[0] == '#' || ft_strchr(room->name, '-'))
-		error("Invalid room");
+		error("Invalid room", lem);
 	lem->size++;
 }
 
@@ -80,7 +80,7 @@ void	get_room_extra(t_lem_in *lem, t_room *room, char *line)
 	}
 	if ((room->x == 0 && *(ft_strchr(line, ' ') + 1) != '0') ||
 	(room->y == 0 && *(ft_strrchr(line, ' ') + 1) != '0'))
-		error("Invalid coord");
+		error("Invalid coord", lem);
 }
 
 void	get_room(t_lem_in *lem, char *line)
@@ -88,7 +88,7 @@ void	get_room(t_lem_in *lem, char *line)
 	t_room	*room;
 
 	if (ft_strlen(line) == 0)
-		error("Empty line!");
+		error("Empty line!", lem);
 	if (!(lem->room))
 	{
 		lem->room = (t_room *)malloc(sizeof(t_room));

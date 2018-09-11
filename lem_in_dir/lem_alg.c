@@ -110,9 +110,9 @@ void	algorithm(t_lem_in *lem)
 	t_room	*end;
 
 	if (!lem->link)
-		error("No links");
+		error("No links", lem);
 	if (lem->start == -1 || lem->end == -1)
-		error("No start or end");
+		error("No start or end", lem);
 	lem->queue = NULL;
 	lem->ways = NULL;
 	lem->relation = NULL;
@@ -126,6 +126,6 @@ void	algorithm(t_lem_in *lem)
 		end = end->next;
 	add_ways(lem, end);
 	if (!lem->ways || !lem->ways->way || lem->ways->way->next == NULL)
-		error("No possible solution");
+		error("No possible solution", lem);
 	ants_way(lem);
 }

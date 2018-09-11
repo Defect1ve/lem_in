@@ -66,11 +66,12 @@ typedef	struct			s_lem_in
 	int					ants;
 	char				color;
 	char				way;
+	char				err;
 	char				position;
 }						t_lem_in;
 
 void					algorithm(t_lem_in *lem);
-void					error(char *str);
+void					error(char *str, t_lem_in *lem);
 void					ants_way(t_lem_in *lem);
 void					get_command(t_lem_in *lem, char *line);
 void					get_room(t_lem_in *lem, char *line);
