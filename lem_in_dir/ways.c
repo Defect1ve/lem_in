@@ -6,7 +6,7 @@
 /*   By: ikotvits <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 14:43:53 by ikotvits          #+#    #+#             */
-/*   Updated: 2018/08/23 14:43:55 by ikotvits         ###   ########.fr       */
+/*   Updated: 2018/09/15 11:05:20 by ikotvits         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	print_ways(t_lem_in *lem)
 		way = ways->way;
 		while (way->next)
 		{
-			ft_printf("%s->", way->room->name);
+			ft_printf("%s<-", way->room->name);
 			way = way->next;
 		}
 		ft_printf("%s\n", way->room->name);

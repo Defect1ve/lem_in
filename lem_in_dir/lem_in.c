@@ -6,7 +6,7 @@
 /*   By: ikotvits <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/19 12:46:48 by ikotvits          #+#    #+#             */
-/*   Updated: 2018/07/19 12:46:49 by ikotvits         ###   ########.fr       */
+/*   Updated: 2018/09/15 11:27:36 by ikotvits         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	get_link(t_lem_in *lem, char *line)
 	i = -1;
 	j = -1;
 	link_check(line, lem, &i, &j);
-	if (lem->link[i][j] == 1 || lem->link[j][i] == 1)
-		algorithm(lem);
 	lem->link[i][j] = 1;
 	lem->link[j][i] = 1;
 }
@@ -89,7 +87,6 @@ void	get_line(t_lem_in *lem, char *line)
 {
 	int			i;
 
-	line_rememb(lem, line);
 	if (line[0] && line[0] == '#')
 		(line[1] && line[1] == '#') ? get_command(lem, line) : 0;
 	else if (lem->ants == -1)
@@ -110,6 +107,7 @@ void	get_line(t_lem_in *lem, char *line)
 		get_link(lem, line);
 	else
 		error("Invalid usage of start/end", lem);
+	line_rememb(lem, line);
 	ft_strdel(&line);
 }
 
