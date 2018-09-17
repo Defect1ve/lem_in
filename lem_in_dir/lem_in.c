@@ -34,7 +34,7 @@ void	link_check(char *line, t_lem_in *lem, int *i, int *j)
 	}
 	ft_strdel(&start);
 	ft_strdel(&end);
-	if (*i == -1 || *j == -1 || *i == *j)
+	if (*i == -1 || *j == -1)
 		algorithm(lem);
 }
 
