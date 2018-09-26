@@ -49,8 +49,8 @@ void	room_check(char *line, t_room *room, t_lem_in *lem)
 	while (*line)
 	{
 		(*line == ' ') ? spaces++ : 0;
-		((*line < 48 || *line > 57) && *line != ' ' && (*line != '-' ||
-		*(line - 1) != ' ')) ? error("Coord fail", lem) : 0;
+		((*line < 48 || *line > 57) && *line != ' ' && ((*line != '-' &&
+		*line != '+') || *(line - 1) != ' ')) ? error("Coord fail", lem) : 0;
 		line++;
 	}
 	while (temp && temp != room)
@@ -79,7 +79,10 @@ void	get_room_extra(t_lem_in *lem, t_room *room, char *line)
 		lem->position = '\0';
 	}
 	if ((room->x == 0 && *(ft_strchr(line, ' ') + 1) != '0') ||
-	(room->y == 0 && *(ft_strrchr(line, ' ') + 1) != '0'))
+	(room->y == 0 && *(ft_strrchr(line, ' ') + 1) != '0') ||
+	(room->x != 0 && *(ft_strchr(line, ' ') + 1) == '0') ||
+	(room->y != 0 && *(ft_strrchr(line, ' ') + 1) == '0') ||
+	ft_strchr(line, '-'))
 		error("Invalid coord", lem);
 }
 
